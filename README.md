@@ -12,7 +12,7 @@
                                                                             L A B   v 2
 ```
 
-### ⚗️ Multi-Model Hallucination Evaluator
+### Multi-Model Hallucination Evaluator
 
 *Pit FLAN-T5 · Claude · GPT-4o · Gemini · Grok · Perplexity against each other — scored by NLI, SBERT & calibration*
 
@@ -39,29 +39,29 @@
 ## ✦ Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        HallucinationLab v2                          │
-│                                                                     │
+┌────────────────────────────────────────────────────────────────────┐
+│                        HallucinationLab v2                         │
+│                                                                    │
 │  ┌──────────────────────────┐    ┌─────────────────────────────┐   │
-│  │         Frontend         │    │          Backend             │   │
-│  │    React + Vite (JSX)    │◄──►│     FastAPI + uvicorn        │   │
-│  │   Real-time SSE stream   │    │   /evaluate-stream (POST)    │   │
-│  │   Radar charts · Cards   │    │   /validate-ground-truth     │   │
+│  │         Frontend         │    │          Backend            │   │
+│  │    React + Vite (JSX)    │◄──►│     FastAPI + uvicorn       │   │
+│  │   Real-time SSE stream   │    │   /evaluate-stream (POST)   │   │
+│  │   Radar charts · Cards   │    │   /validate-ground-truth    │   │
 │  └──────────────────────────┘    └──────────┬──────────────────┘   │
-│                                             │                       │
+│                                             │                      │
 │              ┌──────────────────────────────┼──────────────────┐   │
-│              │          Model Layer          │                   │   │
-│              │                              │                   │   │
-│  ┌───────────▼─────────┐     ┌─────────────▼──────────────┐   │   │
-│  │   Local (GPU/CPU)    │     │     External APIs           │   │   │
-│  │                      │     │                             │   │   │
-│  │  FLAN-T5-large        │     │  Claude Sonnet              │   │   │
-│  │  RoBERTa-large-mnli  │     │  GPT-4o                     │   │   │
-│  │  Sentence-BERT MiniLM│     │  Gemini Flash               │   │   │
-│  └──────────────────────┘     │  Grok-3-mini               │   │   │
-│                               │  Perplexity Sonar           │   │   │
-│                               └─────────────────────────────┘   │   │
-└─────────────────────────────────────────────────────────────────────┘
+│              │          Model Layer         │                  │   │
+│              │                              │                  │   │
+│  ┌───────────▼───────────┐    ┌─────────────▼──────────────┐   │   │
+│  │   Local (GPU/CPU)     │    │     External APIs          │   │   │
+│  │                       │    │                            │   │   │
+│  │  FLAN-T5-large        │    │  Claude Sonnet             │   │   │
+│  │  RoBERTa-large-mnli   │    │  GPT-4o                    │   │   │
+│  │  Sentence-BERT MiniLM │    │  Gemini Flash              │   │   │
+│  └───────────────────────┘    │  Grok-3-mini               │   │   │
+│                               │  Perplexity Sonar          │   │   │
+│                               └────────────────────────────┘   │   │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -289,32 +289,6 @@ The system automatically flags detected failure modes:
 
 ---
 
-## ✦ Deployment
-
-### Backend (GPU Cloud)
-
-```bash
-# RunPod / Vast.ai (recommended for GPU inference)
-# Railway / Render (CPU-only, slower — FLAN-T5 still works)
-
-uvicorn main:app --host 0.0.0.0 --port 8000
-```
-
-### Frontend (Vercel / Netlify)
-
-```javascript
-// App.jsx — line 3
-// Change before deploying:
-const API = "https://your-backend.railway.app";
-```
-
-```bash
-npm run build     # outputs to dist/
-# Push dist/ to Vercel or Netlify
-```
-
----
-
 ## ✦ Tech Stack
 
 | Layer | Technology |
@@ -371,12 +345,6 @@ Contributions are welcome. To add a new model:
 2. Write an `async gen_yourmodel(question)` function following the existing pattern
 3. Register it in the `run_model()` dispatcher
 4. Add it to the `MODELS` array in `App.jsx` with a unique color
-
----
-
-## ✦ License
-
-MIT — do whatever you want, attribution appreciated.
 
 ---
 
