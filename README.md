@@ -353,6 +353,4 @@ Contributions are welcome. To add a new model:
 *Built with obsessive attention to metric rigor.*
 *Because "it sounds right" is not a benchmark.*
 
-⚗️
-
 </div>
